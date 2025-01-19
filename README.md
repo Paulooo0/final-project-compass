@@ -89,42 +89,41 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 **2. Rede Segura**
 
 - A `VPC` separa os recursos em sub-redes públicas e privadas.
-- Apenas o `Elastic Load Balancer` está na sub-rede pública.
+- Apenas o `Application Load Balancer` está na sub-rede pública.
 - Servidores frontend, backend e banco de dados estão isolados em sub-redes privadas sem acesso direto à Internet.
 
 **3. Controle de Acesso**
 
-- Security Groups: Controlam o tráfego de entrada e saída nas instâncias. Apenas o ELB pode acessar as instâncias frontend.
+- Security Groups: Controlam o tráfego de entrada e saída nas instâncias. Apenas o `ELB` pode acessar as instâncias `EC2`.
 - Network ACLs: Adicionam uma camada adicional de segurança na sub-rede.
 
 **4. Armazenamento Seguro**
 
-- Dados no Amazon S3 podem ser criptografados usando chaves gerenciadas pela AWS ou pelo cliente.
-- O Amazon RDS oferece criptografia em repouso e backups automáticos.
+- O `RDS` oferece criptografia em repouso e backups automáticos.
 
 **5. Autenticação e Autorização**
 
-- Integração com AWS IAM para controle de acesso a recursos.
-- Pode-se usar autenticação multi-fator (MFA) para acessar a AWS Management Console.
+- Integração com `IAM` para controle de acesso a recursos.
+- Pode-se usar autenticação multi-fator (MFA) para acessar a `AWS Management Console`.
 
-**6. Entrega de Conteúdo Segura**
+**6. Monitoramento e Logs**
 
-- Amazon CloudFront suporta HTTPS para criptografia de ponta a ponta.
-- Certificados SSL/TLS são configurados para proteger o tráfego.
-
-**7. Monitoramento e Logs**
-
-- AWS CloudWatch monitora métricas, logs e eventos.
-- AWS CloudTrail rastreia atividades no ambiente AWS para auditoria de segurança.
+- `AWS CloudWatch` monitora métricas, logs e eventos.
+- `AWS CloudTrail` rastreia atividades no ambiente AWS para auditoria de segurança.
 
 ### Como será realizado o processo de Backup?
 
-O processo de backup será realizado utilizando o serviço `AWS Backup`. Este serviço centraliza e automatiza os processos de backup, que neste contexto, será para os serviços `RDS` (banco de dados), `S3` (estáticos) e `EBS` (volumes dos servidores). Configurando o plano de backup, o `AWS Backup` realizará os processos de backup de acordo com a frequencia ou política de retenção estabelecida. Os dados de backup ficarão em um ambiente seguro, logicamente isolado e autogerenciado, também contendo recursos de monitoramento, auditoria e operações de proteção de dados.
+**AWS Backup**
 
-A nível individual de cada serviço, o backup será realizado a partir dos seguintes recursos:
+- O processo de backup será realizado utilizando o serviço `AWS Backup`. Este serviço centraliza e automatiza os processos de backup, que neste contexto, será para os serviços `RDS` (banco de dados), `S3` (estáticos) e `EBS` (volumes dos servidores).
+
+- Configurando o plano de backup, o `AWS Backup` realizará os processos de backup de acordo com a frequencia ou política de retenção estabelecida. Os dados de backup ficarão em um ambiente seguro, logicamente isolado e autogerenciado, também contendo recursos de monitoramento, auditoria e operações de proteção de dados.
+
+**Recursos salvos**
+
+- A nível individual de cada serviço, o backup será realizado a partir dos seguintes recursos:
 
 - **RDS**: backups automáticos e criação de snapshots
-- **S3**: versionamento do bucket
 - **EBS**: criação de snapshots
 
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
