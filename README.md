@@ -110,21 +110,19 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 - `AWS CloudWatch` monitora métricas, logs e eventos.
 - `AWS CloudTrail` rastreia atividades no ambiente AWS para auditoria de segurança.
-- `SNS` envia notificações caso haja algum comportamento anômalo.
 
 ### Como será realizado o processo de Backup?
 
-- O processo de backup será realizado utilizando as funcionalidades nativas dos serviços `RDS` e `EBS`, com o suporte de serviços auxiliares como o `CloudWatch` e `SNS` para garantir a integridade dos dados. Cada serviço será configurado para realizar backups de acordo com as políticas de frequência e retenção estabelecidas.
+- O processo de backup será realizado utilizando as funcionalidades nativas dos serviços `RDS` e `EBS`, com o suporte de serviços auxiliares como o `CloudWatch` para garantir a integridade dos dados. Cada serviço será configurado para realizar backups de acordo com as políticas de frequência e retenção estabelecidas.
 
 - **RDS**: O backup do banco de dados será gerido através dos `backups automáticos`. Serão configurados para garantir a retenção de dados de acordo com a frequência definida.
 - **EBS**: O backup dos volumes EBS será realizado através da criação de `snapshots`. Serão configurados para executar periodicamente, de acordo com as políticas de retenção estabelecidas.
-- **CloudWatch**: Será utilizado para configurar alarmes que monitorem a execução dos backups e garantam que os processos estão sendo realizados conforme o esperado. Caso algum backup falhe ou algum evento crítico ocorra, o `CloudWatch` acionará as notificações.
-- **SNS**: Integrado ao `CloudWatch`, o `SNS` será configurado para enviar notificações em tempo real sobre o status dos backups.
+- **CloudWatch**: Será utilizado para configurar alarmes que monitorem a execução dos backups e garantam que os processos estão sendo realizados conforme o esperado.
 
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
 <div align="center"><img src="./assets/image3.png"/>
-  <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/My Estimate - Calculadora de Preços da AWS.pdf">veja o PDF</a></i>
+  <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/as-is-precification.pdf">veja o PDF</a></i>
 </div>
 
 ## Etapa 2: Modernização/Kubernetes
