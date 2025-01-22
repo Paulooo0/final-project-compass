@@ -152,7 +152,15 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
 <div align="center"><img src="./assets/image3.png"/>
-  <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/as-is-precification.pdf">veja o PDF</a></i>
+  <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/as-is-precification.pdf">veja o PDF</a>
+  <br/>Custos referentes apenas aos serviços de migração:
+    <br/>S3 = 1,07 USD
+    <br/>DMS = 139,98 USD
+    <br/>EBS da instância do DMS = 17,25 USD
+    <br/>AMS = 0,00 USD
+    <br/>EC2 do AMS = 34,37 USD
+    <br/>TOTAL = 192,67 USD
+    </i>
 </div>
 
 ## Etapa 2: Modernização/Kubernetes
