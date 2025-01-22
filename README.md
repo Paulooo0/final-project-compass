@@ -76,6 +76,36 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 ### Quais as ferramentas vão ser utilizadas?
 
+**AWS Shield**: O `AWS Shield` protege o ambiente contra ataques de `DDoS` (negação de serviço distribuída). No diagrama, é usado para proteger a aplicação exposta ao tráfego público, mitigando tentativas de sobrecarregar recursos, como o `Application Load Balancer`, garantindo disponibilidade e resiliência.
+
+**Amazon Route 53**: O `Route 53` fornece resolução `DNS` (processo de transformar um nome de domínio em um endereço IP) para os domínios da aplicação. Ele direciona os usuários para o `Application Load Balancer`, garantindo que o tráfego seja roteado de forma eficiente e confiável.
+
+**EC2 Frontend**: Instância `EC2` que possui a interface do usuário feita em `React`. Recebe requisições do balanceador de carga e se comunica com o `backend` para processar os dados.
+
+**EC2 Backend**: Intância `EC2` que possui as regras de negócio do aplicativo com `3 APIs`, com o `Nginx` servindo de balanceador de carga e que armazena estáticos como fotos e links. Recebe as requisições do `frontend`, processa a lógica e interage com o banco de dados `RDS` para persistir ou recuperar informações.
+
+**EC2 do AMS**: A `EC2` gerenciada pelo `AMS` é destinada à operações específicas relacionadas à etapa de migração dos servidores `on-premises` para a AWS. Sendo uma `EC2` do tipo `c5a.large`, que é utilizada para cargas computacionais intenças Com desempenho muito semelhante à `c5.large` porém mais barata por ser alimentada por processadores AMD EPYC.
+
+**Amazon RDS for MySQL (RDS)**: O `RDS` é um serviço gerenciado que fornece um banco de dados relacional seguro e escalável. Ele elimina a necessidade de tarefas administrativas como backups e atualizações, garantindo alta disponibilidade e réplicas de leitura. Integrado ao `backend` na sub-rede privada, ele armazena e processa dados com desempenho e proteção otimizados.
+
+**Amazon Virtual Private Cloud (VPC)**: A `VPC` isola logicamente a infraestrutura em uma rede privada, garantindo segurança e controle de tráfego. Dentro da `VPC`, existe uma subnet pública (para o Application Load Balancer) e subnets privadas (para servidores frontend, backend e bancos de dados), e um `NAT Gateway` para acesso à internet a partir das subnets privadas. Por padrão inclui um `Internet Gateway` que permite a `VPC` se comunique com a Internet.
+
+**Application Load Balancer (ALB)**: O `ALB` distribui o tráfego recebido entre as instâncias `EC2` frontend e backend, garantindo alta disponibilidade e escalabilidade do aplicativo.
+
+**Amazon Simple Storage Service (S3)**: O S3 será utilizado para armazenar arquivos temporários, para auxilixar o processo de migraçao do `AMS`
+
+**Amazon Elastic Block Store (EBS)**: O `EBS` fornece armazenamento persistente para as instâncias `EC2`. Ele armazena dados críticos do sistema e arquivos necessários para as operações do `frontend` e `backend`, e serviços que dependem de instâncias `EC2`.
+
+**AWS Database Migration Service (DMS)**: O `DMS` facilita a migração contínua de dados do banco de dados local para o `RDS` na AWS. Ele replica dados de maneira segura, permitindo migração em tempo real sem interrupção no serviço.
+
+**AWS Application Migration Service (AMS)**: O `AMS` permite migração de servidores de aplicativos locais para instâncias `EC2` na AWS. Ele replica servidores físicos ou virtuais diretamente para a nuvem, garantindo consistência e mínima latência durante o processo.
+
+**AWS IAM Access Analyser**: Esse serviço analisa políticas `IAM` e detecta permissões excessivamente amplas ou problemas de segurança. Ele ajuda a garantir que as permissões atribuídas aos recursos no `VPC` estejam de acordo com as práticas recomendadas.
+
+**AWS CloudTrail**: O `CloudTrail` registra as ações realizadas no ambiente AWS, como acessos e modificações nos recursos. Ele fornece auditoria completa e visibilidade das atividades para conformidade e investigações.
+
+**Amazon CloudWatch**: O `CloudWatch` monitora a saúde e o desempenho dos recursos no ambiente. Ele coleta métricas de instâncias `EC2`, `load balancer`, e outros serviços, permitindo alertas e ações baseadas em eventos.
+
 ### Qual o diagrama da infraestrutura na AWS?
 
 <div align="center"><img src="./assets/image2.png"/></div>
