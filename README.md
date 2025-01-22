@@ -145,9 +145,9 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 - O processo de backup será realizado utilizando as funcionalidades nativas dos serviços `RDS` e `EBS`, com o suporte de serviços auxiliares como o `CloudWatch` para garantir a integridade dos dados. Cada serviço será configurado para realizar backups de acordo com as políticas de frequência e retenção estabelecidas.
 
-- **RDS**: O backup do banco de dados será gerido através dos `backups automáticos`. Serão configurados para garantir a retenção de dados de acordo com a frequência definida.
-- **EBS**: O backup dos volumes EBS será realizado através da criação de `snapshots`. Serão configurados para executar periodicamente, de acordo com as políticas de retenção estabelecidas.
-- **CloudWatch**: Será utilizado para configurar alarmes que monitorem a execução dos backups e garantam que os processos estão sendo realizados conforme o esperado.
+- **RDS**: O backup do banco de dados será gerido através dos `backups automáticos` do `RDS`. Os backups serão configurados para garantir a retenção de dados de acordo com a frequência definida.
+- **EBS**: O backup dos volumes EBS será realizado através da criação de `snapshots`. As criações de `snapshots` serão configuradas para executar periodicamente, de acordo com as políticas de retenção estabelecidas.
+- **CloudWatch**: Será utilizado para configurar `alarmes` que monitorem a execução dos backups e garantam que os processos estão sendo realizados conforme o esperado.
 
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
