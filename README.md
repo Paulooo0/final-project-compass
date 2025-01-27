@@ -220,4 +220,8 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
+<div align="center"><img src="./assets/image3.png"/>
+  <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/modern-arch-precification.pdf">veja o PDF</a>
+</div>
+
 ## Conclusão
