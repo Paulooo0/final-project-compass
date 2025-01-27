@@ -202,8 +202,6 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 - **Secrets Manager**: Gerencia segredos como credenciais de banco de dados e chaves de API de forma segura e automatiza a rotação de segredos.
 
-- **GuardDuty**: Serviço de detecção de ameaças que analisa eventos da conta AWS para identificar atividades suspeitas.
-
 - **IAM (Identity and Access Management)**: Gerencia usuários, permissões e políticas de acesso aos recursos AWS, garantindo que cada componente tenha apenas os privilégios necessários.
 
 - **Budgets**: Configura alertas financeiros para monitorar custos, uso e previsões de orçamento.
@@ -220,7 +218,7 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
-<div align="center"><img src="./assets/image3.png"/>
+<div align="center"><img src="./assets/image5.png"/>
   <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/modern-arch-precification.pdf">veja o PDF</a>
 </div>
 
