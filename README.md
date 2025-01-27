@@ -102,8 +102,6 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 **AWS IAM Access Analyser**: Esse serviço analisa políticas `IAM` e detecta permissões excessivamente amplas ou problemas de segurança. Ele ajuda a garantir que as permissões atribuídas aos recursos no `VPC` estejam de acordo com as práticas recomendadas.
 
-**AWS CloudTrail**: O `CloudTrail` registra as ações realizadas no ambiente AWS, como acessos e modificações nos recursos. Ele fornece auditoria completa e visibilidade das atividades para conformidade e investigações.
-
 **Amazon CloudWatch**: O `CloudWatch` monitora a saúde e o desempenho dos recursos no ambiente. Ele coleta métricas de instâncias `EC2`, `load balancer`, e outros serviços, permitindo alertas e ações baseadas em eventos.
 
 ### Qual o diagrama da infraestrutura na AWS?
@@ -138,8 +136,7 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 **6. Monitoramento e Logs**
 
-- `AWS CloudWatch` monitora métricas, logs e eventos.
-- `AWS CloudTrail` rastreia atividades no ambiente AWS para auditoria de segurança.
+- `AWS CloudWatch` monitora métricas, logs e eventos dos recursos da AWS.
 
 ### Como será realizado o processo de Backup?
 
@@ -169,7 +166,53 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 ### Quais as ferramentas vão ser utilizadas?
 
+- **WAF (Web Application Firewall)**: Protege as aplicações web bloqueando tráfego malicioso antes de atingir os servidores.
+
+- **CloudFront**: Rede de entrega de conteúdo (CDN) que distribui dados, arquivos estáticos e APIs globalmente com baixa latência e alta transferência.
+
+- **Route 53**: Serviço de `DNS` que roteia o tráfego para o `CloudFront` e outros serviços.
+
+- **VPC (Virtual Private Cloud)**: Rede isolada logicamente onde todos os recursos da arquitetura estão hospedados.
+  - **NAT Gateway**: Permite que os `pods` em `subnets` privadas acessem a internet para atualizações sem expô-los diretamente.
+  - **Internet Gateway**: Conecta dos serviços da `VPC` com a internet.
+  - **Subnets**: As `subnets` públicas subsidiam os `NAT Gateways` e o `Application Load Balancer`, as `subnets` privadas hospedam os pods do `EKS` e os bancos de dados `RDS`.
+- **Application Load Balancer (ALB)**: Distribui o tráfego para o `Ingress`, que roteia o tráfego para os pods em execução no cluster `EKS`, garantindo alta disponibilidade e balanceamento entre as zonas de disponibilidade.
+
+- **EKS (Elastic Kubernetes Service)**: Serviço que provisiona um cluster `Kubernetes` na nuvem AWS.
+
+  - **Ingress**: Gerencia o roteamento de requisições HTTP/HTTPS entre o `ALB` e os pods que hospedam APIs, React e outros serviços.
+  - **Produção**: Ambiente dedicado aos pods em execução que suportam os serviços para clientes finais.
+  - **DEV/QA**: Ambiente isolado para desenvolvimento e testes, garantindo que as alterações sejam validadas antes de ir para produção.
+  - **Monitoramento**: Pods dedicados ao `Prometheus` e Grafana para monitoramento de métricas, logs e observabilidade do cluster e aplicações.
+
+- **RDS (Relational Database Service)**: Serviço de banco de dados gerenciado, rodando `MySQL` e em modo `Multi-AZ`.
+
+  - **Produção**: Banco de dados principal que gerencia leituras e gravações das aplicações em produção. Em AZs diferentes, à réplicas de leitura otimizadas para aliviar a carga do banco principal em operações somente leitura. Se o banco principal cair, uma réplica de leitura automaticamente se tornará o novo banco principal.
+  - **DEV/QA**: Banco de dados isolado para desenvolvimento e testes, evitando interferências no ambiente de produção.
+
+- **GitHub**: Repositório onde o código-fonte do projeto é armazenado e versionado, permitindo colaboração entre os desenvolvedores.
+
+- **Github Actions**: Automatiza pipelines de `CI/CD`, incluindo a execução de testes, build das imagens de contêiner e deploy no `EKS`.
+
+- **Terraform**: Ferramenta de `IaC` (Infraestrutura como Código) usada para provisionar e gerenciar a infraestrutura AWS, garantindo consistência e automação.
+
+- **ECR (Elastic Container Registry)**: Repositório gerenciado de imagens de contêiner que armazena as imagens usadas no cluster `EKS`.
+
+- **KMS (Key Management Service)**: Gerencia as chaves de criptografia para proteger dados em trânsito e em repouso, incluindo os dados armazenados no `RDS`.
+
+- **Secrets Manager**: Gerencia segredos como credenciais de banco de dados e chaves de API de forma segura e automatiza a rotação de segredos.
+
+- **GuardDuty**: Serviço de detecção de ameaças que analisa eventos da conta AWS para identificar atividades suspeitas.
+
+- **IAM (Identity and Access Management)**: Gerencia usuários, permissões e políticas de acesso aos recursos AWS, garantindo que cada componente tenha apenas os privilégios necessários.
+
+- **Budgets**: Configura alertas financeiros para monitorar custos, uso e previsões de orçamento.
+
+- **SNS (Simple Notification Service)**: Envia relatórios de faturamento e notificações de limites de custo por e-mail.
+
 ### Qual o diagrama da infraestrutura na AWS?
+
+<div align="center"><img src="./assets/image4.png"/></div>
 
 ### Como serão garantidos os requisitos de Segurança?
 
