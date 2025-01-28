@@ -74,7 +74,7 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 - No momento do corte, as conexões com o banco de dados on-premises são encerradas, e todas as aplicações são conectadas ao banco de dados `RDS`.
 
-### Quais as ferramentas vão ser utilizadas?
+### Quais as ferramentas que vão ser utilizadas?
 
 **AWS Shield**: O `AWS Shield` protege o ambiente contra ataques de `DDoS` (negação de serviço distribuída). No diagrama, é usado para proteger a aplicação exposta ao tráfego público, mitigando tentativas de sobrecarregar recursos, como o `Application Load Balancer`, garantindo disponibilidade e resiliência.
 
@@ -164,7 +164,27 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 ### Quais atividades são necessárias para a migração?
 
-### Quais as ferramentas vão ser utilizadas?
+1. Integração com CI/CD:
+
+- Criação de pipelines de build, commit e deploy com Github Actions.
+
+2. IaC:
+
+- Provisionamento da infraestrutura de forma programática utilizando `Terraform`, garantidno consistência e escalabilidade da infraestrutura.
+
+3. Criação e Configuração do Cluster Kubernetes:
+
+- Depositar as imagens dos conteiners no `ECR`.
+- Utilização do `EKS` para provisionamento e gerenciamento do cluster `Kubernetes`.
+- Configuração dos ambientes de produção, desenvolvimento/testes, e serviços de monitoramento.
+
+4. Outros recursos:
+
+- Provisionamento dos recursos de apoio à aplicação, como o `RDS` para banco de dados, `Application Load Balancer` para distribuir a carga da aplicação, `Route 53` para DNS e gerenciar tráfego, e `CloudFront` para entrega de conteúdo.
+- Utilização de serviços de segurança como `WAF` para proteger a aplicação web, `KMS` para gerenciar chaves, `Secrets Manager` para gerenciar credenciais, e `IAM` para gerenciar o acesso dos usuários da AWS.
+- Utilizar `AWS Budgets` e `SNS` para enviar relatórios de faturamento para o cliente via e-mail.
+
+### Quais as ferramentas que vão ser utilizadas?
 
 - **WAF (Web Application Firewall)**: Protege as aplicações web bloqueando tráfego malicioso antes de atingir os servidores.
 
