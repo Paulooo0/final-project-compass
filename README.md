@@ -1,3 +1,5 @@
+Este é um projeto com o intuito de simular para um cliente a migração de um sistema On-Premises para um sistema moderno na AWS. Sendo este um sistema escalável, resiliente e tolerante à falhas, utilizando Kubernetes.
+
 ## Contexto
 
 Nós somos da empresa "Fast Engineering S/A" e gostaríamos de uma solução dos senhores(as), que fazem parte da empresa terceira "TI SOLUÇÕES INCRÍVEIS".
@@ -239,7 +241,21 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
 <div align="center"><img src="./assets/image5.png"/>
-  <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/modern-arch-precification.pdf">veja o PDF</a>
+  <br/><i>Para mais detalhes sobre a estimativa, <a href="https://github.com/Paulooo0/final-project-compass/blob/main/assets/modern-arch-precification.pdf">veja o PDF</a></i>
 </div>
 
 ## Conclusão
+
+&nbsp;&nbsp;&nbsp;&nbsp;Neste projeto foi proposta a migração de um sistema On-Premises para a nuvem AWS. Utilizando o princípio "as-is", também conhecido como "lift-and-shift", que se baseia em recriar o sistema local na nuvem, sem fazer alterações significativas, mantendo ao máximo o funcionamento original do sistema, possibilitando uma migração mais controlada.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Assim foi feito o planejamento de migração, ferramentas a serem utilizadas, e os custos presumidos tanto da migração quanto para manter a arquitetura na nuvem.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Após concluir a migração "as-is", o cliente necessita de um sistema moderno e escalável utilizando Kubernetes, e para isso, é necessário fazer alterações mais profundas no funcionamento do sistema.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O sistema original precisou ser divido em um sistema distribuído de microserviços para possibilitar uma escalabilidade muito maior. Foi necessária a diferenciação de ambientes, sendo divido entre produção e DEV/QA, sendo ambos idênticos mas com diferenças significativas no provisionamento de recursos computacionais. Utilização de banco de dados MultiAZ com Read Replica para garantir failover e maior escalabilidade. Inserção do ambiente de produção em auto-scaling groups para escalonamento horizontal com base na demanda, tanto para in-scale quanto para out-scale.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Também foram utilizados diversos serviços e ferramentas auxiliares para envio de relatórios de faturamento, políticas de acesso, segurança do sistema, resiliência e tolerância a falhas por parte da apicação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A arquitetura do novo sistema garante excelência operacional, eficiência de performance, segurança, sustentabilidade e confiabilidade, que são todos os pilares do Well-Archtected Framework.
+
+<div align="center"><img src="./assets/image6.png"/></div>
