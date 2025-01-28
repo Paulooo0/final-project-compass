@@ -144,7 +144,7 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 - O processo de backup será realizado utilizando as funcionalidades nativas dos serviços `RDS` e `EBS`, com o suporte de serviços auxiliares como o `CloudWatch` para garantir a integridade dos dados. Cada serviço será configurado para realizar backups de acordo com as políticas de frequência e retenção estabelecidas.
 
-- **RDS**: O backup do banco de dados será gerido através dos `backups automáticos` do `RDS`. Os backups serão configurados para garantir a retenção de dados de acordo com a frequência definida.
+- **RDS**: O backup do banco de dados será gerido através dos `backups automáticos` do `RDS` utilizando snapshots. Os backups serão configurados para garantir a retenção de dados de acordo com a frequência definida.
 - **EBS**: O backup dos volumes EBS será realizado através da criação de `snapshots`. As criações de `snapshots` serão configuradas para executar periodicamente, de acordo com as políticas de retenção estabelecidas.
 - **CloudWatch**: Será utilizado para configurar `alarmes` que monitorem a execução dos backups e garantam que os processos estão sendo realizados conforme o esperado.
 
@@ -168,7 +168,7 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 1. Integração com CI/CD:
 
-- Criação de pipelines de build, commit e deploy com Github Actions.
+- Criação de pipelines de teste, build e deploy com Github Actions.
 
 2. IaC:
 
@@ -236,7 +236,29 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 ### Como serão garantidos os requisitos de Segurança?
 
+- **IAM (Identity and Access Management)**: Gerencia permissões e autenticação dos usuários e serviços. Com o uso do `IAM Access Analyser`, são fornecidos recursos para definir verificar e refinar permissões, a fim de alcançar o princípio de privilégio mínimo.
+
+- **KMS (Key Management Service)**: Gerencia chaves de criptografia para proteger dados sensíveis de maneira centralizada, e define políticas em serviços e aplicações integradas.
+
+- **Secrets Manager**: Armazena credenciais de banco de dados, chaves de API e outros segredos de forma segura. Integrado com o `KMS` e `IAM` para definir quais usuários terão acesso aos dados.
+
+- **AWS WAF (Web Application Firewall)**: Protege contra ataques web criando regras de segurança para controle de tráfego.
+
+- **Subnets privadas**: Contribui com a proteção de recursos de computação, evitando exposição direta a acessos externos.
+
+- **Prometheus e Grafana**: O `Prometheus` armazena logs de serviços descobertos dentro do cluster do `EKS`. O `Grafana` recebe estes dados e fornece um ferramental para criação de gráficos e vizualização dos dados.
+
 ### Como será realizado o processo de Backup?
+
+- Os backups serão feitos utilizando recursos nativos do `RDS`, recursos do cluster kubernetes para o `EKS`, e repositórios do `Github` para a infraestrutura, manifestos e código-fonte.
+
+- **RDS**: O `RDS` possui o recurso de backups automáticos através do uso de snapshots. Evitando a perda de informações e permitiindo a recuperação rápida em caso de falha, erro humano ou incidente de segurança. As snapshots incluem os dados, as configurações e os logs de transação, permitindo a recuperação para um ponto exato no tempo dentro do período de retenção definido.
+
+- **EKS**: Através do versionamento dos manifestos kubernetes, as alterações dentro do cluster são documentadas. O cluster `Kubernetes` possui o recurso de `rollout`, que aplica as mudanças nos recursos do Kubernetes de forma incremental, assim possibilitando que os pods retornem a versões mais antigas conforme a necessidade.
+
+- **ECR**: Utilizando o `Github`, é possível armazenar manifestos do `ECR`. Para isso, é necessário criar um script para a exportação periódica e automatizada dos manifestos das imagens de forma programática.
+
+- **Github**: O código-fonte, manifestos e infraestrutura são versionados em repositórios do `GitHub`. Suas alterações podem ser acessadas facilmente através dos históricos de commits.
 
 ### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
