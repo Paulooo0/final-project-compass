@@ -210,9 +210,10 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 - **RDS (Relational Database Service)**: Serviço de banco de dados gerenciado, rodando `MySQL` e em modo `Multi-AZ`.
 
   - **Produção**: Banco de dados principal que gerencia leituras e gravações das aplicações em produção. Em AZs diferentes, à réplicas de leitura otimizadas para aliviar a carga do banco principal em operações somente leitura. Se o banco principal cair, uma réplica de leitura automaticamente se tornará o novo banco principal.
+
   - **DEV/QA**: Banco de dados isolado para desenvolvimento e testes, evitando interferências no ambiente de produção.
 
-- **GitHub**: Repositório onde o código-fonte do projeto é armazenado e versionado, permitindo colaboração entre os desenvolvedores.
+- **GitHub**: No `GitHub` ficarão armazenados e versionados o código-fonte, manifestos e infraestrutura do projeto.
 
 - **Github Actions**: Automatiza pipelines de `CI/CD`, incluindo a execução de testes, build das imagens de contêiner e deploy no `EKS`.
 
