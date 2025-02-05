@@ -231,6 +231,8 @@ Porém antes da migração acontecer para a nova estrutura, precisamos fazer uma
 
 - **SNS (Simple Notification Service)**: Envia relatórios de faturamento e notificações de limites de custo por e-mail.
 
+- **AWS Organizations**: Faz a divisão das contas AWS, isolando os ambientes de produção e desenvolvimento.
+
 ### Qual o diagrama da infraestrutura na AWS?
 
 <div align="center"><img src="./assets/image4.png"/></div>
